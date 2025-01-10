@@ -1,4 +1,5 @@
-import javax.sql.rowset.JdbcRowSet;
+package main;
+
 import javax.swing.*;
 
 public class Main {
