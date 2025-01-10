@@ -15,6 +15,7 @@ public class Player extends Entity{
     GamePanel gp;
     KeyHandler keyH;
     BufferedImage load;
+    int counter = 0;
     int animation_index = 0;
 
 
@@ -28,7 +29,7 @@ public class Player extends Entity{
     public void setDefaultValues(){
         x = 100;
         y= 100;
-        speed = 4;
+        speed = 3;
     }
     public void update(){
         action = "idling";
@@ -70,7 +71,11 @@ public class Player extends Entity{
                 image = jump.get(animation_index);
                 break;
         }
-        animation_index ++;
+        counter ++;
+        if (counter == 7) {
+            animation_index++;
+            counter  = 0;
+        }
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
 
     }

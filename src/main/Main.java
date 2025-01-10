@@ -1,9 +1,11 @@
 package main;
 
 import javax.swing.*;
+import java.io.IOException;
+
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
@@ -17,5 +19,6 @@ public class Main {
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+
     }
 }
