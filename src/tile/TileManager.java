@@ -1,46 +1,62 @@
 package tile;
 
 import main.GamePanel;
-import utils.OpenSimplex2S;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+        import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class TileManager {
     GamePanel gp;
-    ArrayList<Tile> tile;
+    Tile[] tiles;
 
     public TileManager(GamePanel gp){
         this.gp = gp;
-        tile = new ArrayList<>(); //define the number of tiles
         getTileImage();
     }
 
-    public void getTileImage(){
+    public Tile[] getTileImage(){
         try{
             BufferedImage origin = ImageIO.read(getClass().getResourceAsStream("/resources/tiles/tiles.png"));
             int height = origin.getHeight() / gp.originalTileSize;
             int width = origin.getWidth() / gp.originalTileSize;
+            int index = 0;
+            tiles = new Tile[height * width];
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     Tile temp = new Tile();
                     temp.image = origin.getSubimage(j * gp.originalTileSize, i * gp.originalTileSize, gp.originalTileSize, gp.originalTileSize);
-                    tile.add(temp);
-                    System.out.println(temp);
+                    tiles[index] = temp;
+                    index++;
                 }
             }
+            return tiles;
         }catch (IOException e){
             e.printStackTrace();
         }
+        return tiles;
     }
 
     public void draw(Graphics2D g2){
-        for (int i = 0; i < gp.mapHeight; i++) {
-            for (int j = 0; j < gp.mapWidth; j++) {
-                g2.drawImage(tile.get((int) (Math.floor((OpenSimplex2S.noise3_ImproveXY(0, i * 0.025, j * 0.025, 0.0)) * 78) + 78)).image, i * gp.tileSize, j * gp.tileSize, gp.tileSize, gp.tileSize, null);
+        int screenX = 0;
+        int screenY = 0;
+        int worldX = 0;
+        int worldY = 0;
+        Tile[][] world = gp.world.getTiles();
+        for (int i = 0; i < gp.mapWidth; i++) {
+            for (int j = 0; j < gp.mapHeight; j++) {
+                worldX = i*gp.tileSize;
+                worldY = j*gp.tileSize;
+
+                screenX = worldX - gp.player.worldX + gp.player.screenX;
+                screenY = worldY - gp.player.worldY + gp.player.screenY;
+                if(worldX > gp.player.worldX - gp.player.screenX - gp.tileSize &&
+                    worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
+                    worldY > gp.player.worldY - gp.player.screenY - gp.tileSize &&
+                    worldY < gp.player.worldY + gp.player.screenY + gp.tileSize
+            )
+            g2.drawImage(world[i][j].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
         }
     }

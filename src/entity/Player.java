@@ -18,36 +18,43 @@ public class Player extends Entity{
     int counter = 0;
     int animation_index = 0;
 
+    public final int screenX;
+    public final int screenY;
+
 
     public Player(GamePanel gp, KeyHandler keyH){
         this.gp = gp;
         this.keyH = keyH;
+
+        screenX = gp.screenWidth/2 - gp.tileSize/2;
+        screenY = gp.screenHeight/2 - gp.tileSize/2;
+
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues(){
-        x = 100;
-        y= 100;
+        worldX = gp.tileSize * 10;
+        worldY = gp.tileSize * 10;
         speed = 3;
     }
     public void update(){
         action = "idling";
         if(keyH.upPressed){
             action = "walking";
-            this.y -= this.speed;
+            this.worldY -= this.speed;
         }
         if(keyH.downPressed){
             action = "walking";
-            this.y += this.speed;
+            this.worldY+= this.speed;
         }
         if(keyH.leftPressed){
             action = "walking";
-            this.x -= this.speed;
+            this.worldX -= this.speed;
         }
         if(keyH.rightPressed){
             action = "walking";
-            this.x += this.speed;
+            this.worldX += this.speed;
         }
 
     }
@@ -76,8 +83,7 @@ public class Player extends Entity{
             animation_index++;
             counter  = 0;
         }
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
-
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
 
     public void getPlayerImage(){

@@ -2,6 +2,7 @@ package main;
 
 import entity.Player;
 import tile.TileManager;
+import world.World;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,19 +14,24 @@ public class GamePanel extends JPanel implements Runnable{
     final int scale = 2;
 
     public final int tileSize = originalTileSize * scale; // 64x64
-    public final int maxScreenCol = 15;
-    public final int maxScreenRow = 8;
+    public final int maxScreenCol = 30;
+    public final int maxScreenRow = 16;
     public final int screenWidth = tileSize * maxScreenCol; // 2048 pixels
     public final int screenHeight = tileSize * maxScreenRow; // 1152 pixels
-    public final int mapHeight = 512;
-    public final int mapWidth = 512;
+
+    //WORLD SETTINGS
+    public final int mapHeight = 500;
+    public final int mapWidth = 500;
+    public final int seed = 10;
+
     //FPS
     final double FPS = 60;
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this, keyH);
+    public Player player = new Player(this, keyH);
     TileManager tileM = new TileManager(this);
+    public World world;
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -33,6 +39,8 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+        this.world = new World(this, tileM);
+        world.generateWorld();
     }
 
     public void startGameThread() {
@@ -79,6 +87,7 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         tileM.draw(g2);
         player.draw(g2);
+        g2.setBackground(Color.CYAN);
         g2.dispose();
     }
 }
