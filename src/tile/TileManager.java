@@ -20,7 +20,7 @@ public class TileManager {
 
     public Tile[] getTileImage(){
         try{
-            BufferedImage origin = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/tiles/tiles.png")));
+            BufferedImage origin = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/tiles/tilesv2.png")));
             UtilityTools uTool = new UtilityTools();
             int height = origin.getHeight() / gp.originalTileSize;
             int width = origin.getWidth() / gp.originalTileSize;
@@ -29,7 +29,7 @@ public class TileManager {
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     Tile temp = new Tile();
-                    if(index == 45) temp.collision = true;
+//                    if(index == 45) temp.collision = true; C'etait l'eau
                     temp.image = origin.getSubimage(j * gp.originalTileSize, i * gp.originalTileSize, gp.originalTileSize, gp.originalTileSize);
                     temp.image = uTool.scaleImage(temp.image, gp.tileSize, gp.tileSize);
                     tiles[index] = temp;

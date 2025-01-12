@@ -6,34 +6,36 @@ Water = 45
 0 = Grass top left water
 1 = Grass top water
 2 = Grass top right water
-3 = Dirt top left water
-4 = Dirt top water
-5 = Dirt top right water
-6 = Dirt top left underwater
-7 = Dirt top underwater
-8 = Dirt top right underwater
-
-13 = Grass left water
-14 = Grass
-15 = Grass right water
-16 = Dirt left water
-17 = Dirt
-18 = Dirt right water
-19 = Dirt left underwater
-20 = Dirt underwater
-21 = Dirt right underwater
-
 26 = Grass bottom left water
 27 = Grass bottom water
 28 = Grass bottom right water
+13 = Grass left water
+14 = Grass
+15 = Grass right water
+78 = Grass bottom left diag water
+79 = Grass bottom right diag water
+
+16 = Dirt left water
+17 = Dirt
+18 = Dirt right water
 29 = Dirt bottom left water
 30 = Dirt bottom water
 31 = Dirt bottom right water
-32 = Dirt bottom left underwater
-33 = Dirt bottom underwater
-34 = Dirt bottom right underwater
-
-78 = Grass bottom left diag water
-79 = Grass bottom right diag water
+3 = Dirt top left water
+4 = Dirt top water
+5 = Dirt top right water
 80 = Dirt bottom left diag water
 81 = Dirt bottom right diag water
+
+6 = Top left underwater
+7 = Top underwater
+8 = Top right underwater
+19 = Left underwater
+20 = Underwater
+21 = Right underwater
+32 = Bottom left underwater
+33 = Bottom underwater
+34 = Bottom right underwater
+82 = Bottom left diag underwater
+83 = Bottom right diag underwater
+

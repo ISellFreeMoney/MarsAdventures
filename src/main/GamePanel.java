@@ -127,6 +127,7 @@ public class GamePanel extends JPanel implements Runnable{
             g2.drawString("Longest Time: " + longestDrawTime, 10, 380);
             g2.drawString("Shortest Time: " + shortestDrawTime, 10, 360);
             g2.drawString("Average Time: " + averageTime, 10, 340);
+            g2.drawString("Tile: " + world.getTiles()[player.worldX / tileSize ][player.worldY / tileSize] , 10, 320);
         }
         g2.setBackground(Color.CYAN);
         g2.dispose();
