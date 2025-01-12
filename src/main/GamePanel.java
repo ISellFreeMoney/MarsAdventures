@@ -6,6 +6,8 @@ import world.World;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.OptionalDouble;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -32,6 +34,15 @@ public class GamePanel extends JPanel implements Runnable{
     public Player player = new Player(this, keyH);
     TileManager tileM = new TileManager(this);
     public World world;
+    public CollisionChecker cChecker = new CollisionChecker(this);
+
+    //DEBUG
+    long drawStart = 0;
+    long longestDrawTime = 0;
+    long shortestDrawTime = System.nanoTime();
+    ArrayList<Long> mean = new ArrayList<>();
+    int debug_time = 0;
+    double averageTime;
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -83,10 +94,40 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void paintComponent(Graphics g){
+
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+
+        if (keyH.displayDrawTime) {
+            drawStart = System.nanoTime();
+        }
         tileM.draw(g2);
         player.draw(g2);
+
+        if (keyH.displayDrawTime){
+            long drawEnd = System.nanoTime();
+            long passed = drawEnd - drawStart;
+            mean.add(passed);
+            debug_time++;
+
+            if(passed < shortestDrawTime)
+                shortestDrawTime = passed;
+            if (passed > longestDrawTime)
+                longestDrawTime = passed;
+
+            if(debug_time == 60){
+                OptionalDouble average = mean.stream().mapToDouble(a -> a).average();
+                debug_time = 0;
+                averageTime = Math.floor(average.isPresent() ? average.getAsDouble() : 0);
+                shortestDrawTime = passed;
+                longestDrawTime = passed;
+            }
+            g2.setColor(Color.CYAN);
+            g2.drawString("Draw Time: " + passed, 10, 400);
+            g2.drawString("Longest Time: " + longestDrawTime, 10, 380);
+            g2.drawString("Shortest Time: " + shortestDrawTime, 10, 360);
+            g2.drawString("Average Time: " + averageTime, 10, 340);
+        }
         g2.setBackground(Color.CYAN);
         g2.dispose();
     }

@@ -5,41 +5,41 @@ import tile.Tile;
 import tile.TileManager;
 import utils.OpenSimplex2S;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class World {
 
     //Size in Tile numbers
-    private int worldXSize;
-    private int worldYSize;
-    private GamePanel gp;
-    private Tile[] tiles;
-    private int SEED;
+
+    private final GamePanel gp;
+    private final Tile[] tiles;
     private Tile[][] worldTiles;
     private int[][] saveFile;
 
 
     public World(GamePanel gp, TileManager tileM){
-        this.SEED = gp.seed;
-        this.worldXSize = gp.mapWidth;
-        this.worldYSize = gp.mapHeight;
         this.gp = gp;
         this.tiles = tileM.getTileImage();
     }
 
     public void generateWorld(){
+        int worldXSize = gp.mapWidth;
+        int worldYSize = gp.mapHeight;
+        int seed = gp.seed;
         worldTiles = new Tile[worldXSize][worldYSize];
         saveFile = new int[worldXSize][worldYSize];
         for (int i = 0; i < worldXSize; i++) {
             for (int j = 0; j < worldYSize; j++) {
-                double index = (OpenSimplex2S.noise3_ImproveXY(0, i * 0.025, j * 0.025, 0.0));
+                double index = (OpenSimplex2S.noise3_ImproveXY(seed, i * 0.025, j * 0.025, 0.0));
                 if(index < -0.30){
                     // Water < 0
-                    worldTiles[i][j] = tiles[45];
-                    saveFile[i][j] = 45;
+                    worldTiles[i][j] = tiles[20];
+                    saveFile[i][j] = 20;
+                    if (index < -0.50) {
+                        worldTiles[i][j] = tiles[45];
+                        saveFile[i][j] = 45;
+                    }
                 } else if ( -0.30 <= index && index < 0.1) {
                     worldTiles[i][j] = tiles[17];
                     saveFile[i][j] = 17;
@@ -58,6 +58,8 @@ public class World {
     }
 
     public void saveWorld(){
+        int worldXSize = gp.mapWidth;
+        int worldYSize = gp.mapHeight;
         try {
 
             FileWriter save = new FileWriter("save.txt");
@@ -71,7 +73,7 @@ public class World {
             save.flush();
             save.close();
         } catch (IOException e){
-            e.printStackTrace();
+            System.err.println("Failed saving world: " + e.getMessage());
         }
     }
 }

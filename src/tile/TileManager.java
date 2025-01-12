@@ -1,11 +1,13 @@
 package tile;
 
 import main.GamePanel;
+import utils.UtilityTools;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
         import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class TileManager {
     GamePanel gp;
@@ -18,7 +20,8 @@ public class TileManager {
 
     public Tile[] getTileImage(){
         try{
-            BufferedImage origin = ImageIO.read(getClass().getResourceAsStream("/resources/tiles/tiles.png"));
+            BufferedImage origin = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/tiles/tiles.png")));
+            UtilityTools uTool = new UtilityTools();
             int height = origin.getHeight() / gp.originalTileSize;
             int width = origin.getWidth() / gp.originalTileSize;
             int index = 0;
@@ -26,23 +29,25 @@ public class TileManager {
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     Tile temp = new Tile();
+                    if(index == 45) temp.collision = true;
                     temp.image = origin.getSubimage(j * gp.originalTileSize, i * gp.originalTileSize, gp.originalTileSize, gp.originalTileSize);
+                    temp.image = uTool.scaleImage(temp.image, gp.tileSize, gp.tileSize);
                     tiles[index] = temp;
                     index++;
                 }
             }
             return tiles;
         }catch (IOException e){
-            e.printStackTrace();
+            System.err.println("Failed Loading Images for the Tiles: " + e.getMessage());
         }
         return tiles;
     }
 
     public void draw(Graphics2D g2){
-        int screenX = 0;
-        int screenY = 0;
-        int worldX = 0;
-        int worldY = 0;
+        int screenX;
+        int screenY;
+        int worldX;
+        int worldY;
         Tile[][] world = gp.world.getTiles();
         for (int i = 0; i < gp.mapWidth; i++) {
             for (int j = 0; j < gp.mapHeight; j++) {
@@ -56,7 +61,7 @@ public class TileManager {
                     worldY > gp.player.worldY - gp.player.screenY - gp.tileSize &&
                     worldY < gp.player.worldY + gp.player.screenY + gp.tileSize
             )
-            g2.drawImage(world[i][j].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            g2.drawImage(world[i][j].image, screenX, screenY, null);
             }
         }
     }
