@@ -27,32 +27,32 @@ public class CollisionChecker {
         switch (entity.colDir){
             case "up":
                 entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
-                tileNum1 = gp.world.getTiles()[entityLeftCol][entityTopRow];
-                tileNum2 = gp.world.getTiles()[entityRightCol][entityTopRow];
+                tileNum1 = gp.world.getWorldTilesId()[entityLeftCol][entityTopRow];
+                tileNum2 = gp.world.getWorldTilesId()[entityRightCol][entityTopRow];
                 if (tileNum1.collision || tileNum2.collision) {
                     entity.collisionOn = true;
                 }
                 break;
             case "down":
                 entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
-                tileNum1 = gp.world.getTiles()[entityLeftCol][entityBottomRow];
-                tileNum2 = gp.world.getTiles()[entityRightCol][entityBottomRow];
+                tileNum1 = gp.world.getWorldTilesId()[entityLeftCol][entityBottomRow];
+                tileNum2 = gp.world.getWorldTilesId()[entityRightCol][entityBottomRow];
                 if (tileNum1.collision || tileNum2.collision) {
                     entity.collisionOn = true;
                 }
                 break;
             case "left":
                 entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
-                tileNum1 = gp.world.getTiles()[entityLeftCol][entityTopRow];
-                tileNum2 = gp.world.getTiles()[entityLeftCol][entityBottomRow];
+                tileNum1 = gp.world.getWorldTilesId()[entityLeftCol][entityTopRow];
+                tileNum2 = gp.world.getWorldTilesId()[entityLeftCol][entityBottomRow];
                 if (tileNum1.collision || tileNum2.collision) {
                     entity.collisionOn = true;
                 }
                 break;
             case "right":
                 entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
-                tileNum1 = gp.world.getTiles()[entityRightCol][entityTopRow];
-                tileNum2 = gp.world.getTiles()[entityRightCol][entityBottomRow];
+                tileNum1 = gp.world.getWorldTilesId()[entityRightCol][entityTopRow];
+                tileNum2 = gp.world.getWorldTilesId()[entityRightCol][entityBottomRow];
                 if (tileNum1.collision || tileNum2.collision) {
                     entity.collisionOn = true;
                 }

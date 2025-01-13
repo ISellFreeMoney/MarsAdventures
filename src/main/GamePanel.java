@@ -2,7 +2,7 @@ package main;
 
 import entity.Player;
 import tile.TileManager;
-import world.World;
+import world.Worldv2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,9 +32,10 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(this, keyH);
-    TileManager tileM = new TileManager(this);
-    public World world;
+    public TileManager tileM = new TileManager(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
+    public Worldv2 world;
+
 
     //DEBUG
     long drawStart = 0;
@@ -50,8 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        this.world = new World(this, tileM);
-        world.generateWorld();
+        this.world = new Worldv2(this);
     }
 
     public void startGameThread() {
@@ -127,7 +127,6 @@ public class GamePanel extends JPanel implements Runnable{
             g2.drawString("Longest Time: " + longestDrawTime, 10, 380);
             g2.drawString("Shortest Time: " + shortestDrawTime, 10, 360);
             g2.drawString("Average Time: " + averageTime, 10, 340);
-            g2.drawString("Tile: " + world.getTiles()[player.worldX / tileSize ][player.worldY / tileSize] , 10, 320);
         }
         g2.setBackground(Color.CYAN);
         g2.dispose();
