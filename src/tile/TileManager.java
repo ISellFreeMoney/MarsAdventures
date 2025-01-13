@@ -63,21 +63,26 @@ public class TileManager {
 //            g2.drawImage(world[i][j].image, screenX, screenY, null);
 //            }
 //        }
-        Tile[][] worldGrid = gp.world.getDualGrid();
-        int screenX, screenY, worldX, worldY;
-        for (int i = 0; i < gp.mapWidth; i++) {
-            for (int j = 0; j < gp.mapHeight; j++) {
-                worldX = worldGrid[i][j].renderX;
-                worldY = worldGrid[i][j].renderX;
-                screenX = worldX - gp.player.worldX + gp.player.screenX;
-                screenY = worldY - gp.player.worldY + gp.player.screenY;
-                if(worldX > gp.player.worldX - gp.player.screenX - gp.tileSize &&
-                        worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
-                        worldY > gp.player.worldY - gp.player.screenY - gp.tileSize &&
-                        worldY < gp.player.worldY + gp.player.screenY + gp.tileSize
-                )
-                    g2.drawImage(worldGrid[i][j].image, screenX, screenY, null);
-            }
-        }
+
+
+
+
+
+//        Tile[][] worldGrid = gp.world.getDualGrid();
+//        int screenX, screenY, worldX, worldY;
+//        for (int i = 0; i < gp.mapWidth - 1; i++) {
+//            for (int j = 0; j < gp.mapHeight - 1; j++) {
+//                worldX = worldGrid[i][j].renderX;
+//                worldY = worldGrid[i][j].renderX;
+//                screenX = worldX - gp.player.worldX + gp.player.screenX;
+//                screenY = worldY - gp.player.worldY + gp.player.screenY;
+//                if(worldX > gp.player.worldX - gp.player.screenX - gp.tileSize &&
+//                        worldX < gp.player.worldX + gp.player.screenX + gp.tileSize &&
+//                        worldY > gp.player.worldY - gp.player.screenY - gp.tileSize &&
+//                        worldY < gp.player.worldY + gp.player.screenY + gp.tileSize
+//                )
+//                    g2.drawImage(worldGrid[i][j].image, screenX, screenY, null);
+//            }
+//        }
     }
 }

@@ -7,13 +7,13 @@ import utils.OpenSimplex2S;
 public class Worldv2 {
     public final GamePanel gp;
     private Tile[][] worldTilesId;
-    private Tile[][] dualGrid;
+//    private final Tile[][] dualGrid;
 
     public Worldv2(GamePanel gp) {
         this.gp = gp;
         generateWorld();
-        WorldDualGrid worldDualGrid = new WorldDualGrid(this, gp.tileM);
-        dualGrid = worldDualGrid.getRenderTiles();
+        WorldDualGrid worldDualGrid = new WorldDualGrid(gp.tileM);
+//        dualGrid = worldDualGrid.getRenderTiles();
     }
 
     public void generateWorld(){
@@ -27,7 +27,11 @@ public class Worldv2 {
                 double index = (OpenSimplex2S.noise3_ImproveXY(seed, i * 0.025, j * 0.025, 0.0));
                 currentTile.x = i * gp.tileSize;
                 currentTile.y = j * gp.tileSize;
-                currentTile.id = (int) Math.floor(index);
+//                if(index > 0){
+//                    currentTile.id = 1;
+//                } else {
+//                    currentTile.id = 0;
+//                }
                 worldTilesId[i][j] = currentTile;
                 /*
                 if(index < - 0.30){
@@ -46,7 +50,7 @@ public class Worldv2 {
         return worldTilesId;
     }
 
-    public Tile[][] getDualGrid() {
-        return dualGrid;
-    }
+//    public Tile[][] getDualGrid() {
+//        return dualGrid;
+//    }
 }
