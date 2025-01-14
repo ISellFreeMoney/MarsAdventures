@@ -2,11 +2,13 @@ package world;
 
 import main.GamePanel;
 import tile.Tile;
+import tile.TileMap;
+import tile.TileType;
 import utils.OpenSimplex2S;
 
 public class Worldv2 {
     public final GamePanel gp;
-    private Tile[][] worldTilesId;
+    private TileMap worldTilesId;
 //    private final Tile[][] dualGrid;
 
     public Worldv2(GamePanel gp) {
@@ -21,18 +23,16 @@ public class Worldv2 {
         int worldYSize = gp.mapHeight;
         int seed = gp.seed;
         Tile currentTile = new Tile();
-        worldTilesId = new Tile[worldXSize][worldYSize];
+        worldTilesId = new TileMap(500);
         for (int i = 0; i < worldXSize; i++) {
             for (int j = 0; j < worldYSize; j++) {
                 double index = (OpenSimplex2S.noise3_ImproveXY(seed, i * 0.025, j * 0.025, 0.0));
-                currentTile.x = i * gp.tileSize;
-                currentTile.y = j * gp.tileSize;
-//                if(index > 0){
-//                    currentTile.id = 1;
-//                } else {
-//                    currentTile.id = 0;
-//                }
-                worldTilesId[i][j] = currentTile;
+                if(index > 0){
+                    currentTile.type = TileType.DIRT;
+                } else {
+                    currentTile.type = TileType.GRASS;
+                }
+                worldTilesId.setTile(new int[]{i,j}, currentTile);
                 /*
                 if(index < - 0.30){
                     worldTilesId[i][j] = 102;
@@ -46,7 +46,7 @@ public class Worldv2 {
         }
     }
 
-    public Tile[][] getWorldTilesId() {
+    public TileMap getWorldTilesId() {
         return worldTilesId;
     }
 

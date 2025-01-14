@@ -18,8 +18,8 @@ public class TileMap{
         map[coords[0]][coords[1]] = tile;
     }
 
-
     public Tile getTile(int[] coords){
         return map[coords[0]][coords[1]];
     }
+
 }

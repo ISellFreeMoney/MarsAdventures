@@ -24,12 +24,15 @@ public class WorldDualGrid {
     public Tile grassPlaceHolderTile;
     public Tile dirtPlaceHolderTile;
 
+    public Worldv2 world;
+
     public TileManager tileM;
 
     public Tile[][] tiles;
 
-    public WorldDualGrid(TileManager tileM) {
-        placeholderTileMap = new TileMap(50);
+    public WorldDualGrid(TileManager tileM, Worldv2 world) {
+        this.world = world;
+        placeholderTileMap = world.getWorldTilesId();
         displayTileMap = new TileMap(50);
 
         this.tileM = tileM;
