@@ -1,6 +1,6 @@
 package chunk;
 
-import chunk.util.Positionable;
+import util.Positionable;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
 package entity.Animation;
 
-import utils.UtilityTools;
+import util.UtilityTools;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

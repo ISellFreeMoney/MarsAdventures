@@ -1,8 +1,8 @@
 package chunk;
 
-import chunk.util.Boundable;
-import chunk.util.Indexable;
-import chunk.util.Observable;
+import util.Boundable;
+import util.Indexable;
+import util.Observable;
 
 import java.io.Serializable;
 

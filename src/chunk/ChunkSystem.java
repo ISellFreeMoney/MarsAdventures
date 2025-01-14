@@ -1,12 +1,14 @@
 package chunk;
 
-import chunk.util.Manageable;
-import chunk.util.Observable;
+import chunk.io.ChunkLoader;
+import chunk.io.ChunkSaver;
+import util.Manageable;
+import util.Observable;
 
 import java.util.Collection;
 
 public interface ChunkSystem extends Manageable, ConfigurationProvider, Observable<ChunkSystemListener> {
-    Chunk getAtctiveChunk();
+    Chunk getActiveChunk();
     Collection<Chunk> getChunks();
     Chunk getChunk(int indexX, int indexY);
     int getCurrentChunkCount();

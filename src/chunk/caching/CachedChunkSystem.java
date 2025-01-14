@@ -1,7 +1,7 @@
 package chunk.caching;
 
 import chunk.ChunkSystem;
-import chunk.util.IndexBoundable;
+import util.IndexBoundable;
 
 public interface CachedChunkSystem  extends ChunkSystem {
     IndexBoundable getCache();

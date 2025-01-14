@@ -4,7 +4,7 @@ import main.GamePanel;
 import tile.Tile;
 import tile.TileMap;
 import tile.TileType;
-import utils.OpenSimplex2S;
+import util.OpenSimplex2S;
 
 public class Worldv2 {
     public final GamePanel gp;
@@ -14,7 +14,7 @@ public class Worldv2 {
     public Worldv2(GamePanel gp) {
         this.gp = gp;
         generateWorld();
-        WorldDualGrid worldDualGrid = new WorldDualGrid(gp.tileM);
+        WorldDualGrid worldDualGrid = new WorldDualGrid(gp.tileM, this);
 //        dualGrid = worldDualGrid.getRenderTiles();
     }
 

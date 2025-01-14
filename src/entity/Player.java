@@ -3,7 +3,7 @@ package entity;
 import entity.Animation.Animation;
 import main.GamePanel;
 import main.KeyHandler;
-import utils.UtilityTools;
+import util.UtilityTools;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,7 +1,9 @@
 package chunk.caching;
 
 import chunk.*;
-import chunk.util.*;
+import chunk.io.ChunkSaver;
+import chunk.moving.MoveEvent;
+import util.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class CachedChunkHandler implements ChunkHandler {
     public CachedChunkHandler(CachedChunkSystem chunkSystem){
         this.chunkSystem = chunkSystem;
         chunkFactory = new SimpleChunkFactory(chunkSystem.getConfiguration());
-        positionInterpreter = new SimplePositionInterpreter(chunkSystem.getconfiguration());
+        positionInterpreter = new SimplePositionInterpreter(chunkSystem.getConfiguration());
     }
 
     @Override
