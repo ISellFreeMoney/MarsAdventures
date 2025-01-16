@@ -1,35 +1,56 @@
-name: Java CI to create and upload release on pull request
+name: Java CI to create and upload release for MarsAdventures
+
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 env:
-  build-number: ${GITHUB_RUN_NUMBER}
+  build-number: ${{ GITHUB_RUN_NUMBER }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      # Étape 1 : Récupération du code source
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Étape 2 : Configuration de Java (Temurin 11)
+      - name: Setup Java
+        uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'temurin'
           cache: 'maven'
-      - run: mvn clean package -DskipTests
-      - run: mkdir staging && mv target/yb-workload-sim.jar target/yb-workload-sim-${{ env.build-number }}.jar && cp target/*.jar staging
-      - uses: actions/upload-artifact@v3
+
+      # Étape 3 : Compilation et empaquetage du projet
+      - name: Build project with Maven
+        run: mvn clean package -DskipTests
+
+      # Étape 4 : Préparer le fichier JAR pour la release
+      - name: Prepare release files
+        run: |
+          mkdir staging
+          mv target/*.jar target/mars-adventures-${{ env.build-number }}.jar
+          cp target/mars-adventures-${{ env.build-number }}.jar staging/
+
+      # Étape 5 : Upload du fichier JAR comme artefact
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: Package
-          path: staging
+          name: MarsAdventures
+          path: staging/
           retention-days: 1
-      - uses: marvinpinto/action-automatic-releases@latest
+
+      # Étape 6 : Création d'une release automatique
+      - name: Create GitHub Release
+        uses: marvinpinto/action-automatic-releases@latest
         with:
-          repo_token: "${{ secrets.YOUR-GITHUB-TOKEN }}"
-          automatic_release_tag: "${{ github.run_number }}"
-          title: "Automated Build ${{ github.run_number }}"
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: "build-${{ github.run_number }}"
+          title: "MarsAdventures Build ${{ github.run_number }}"
           prerelease: true
           files: staging/*.jar
-          
