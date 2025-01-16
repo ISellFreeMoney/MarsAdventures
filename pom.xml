@@ -20,6 +20,13 @@
 
     <!-- Plugins Maven -->
     <build>
+
+        <resources>
+            <resource>
+                <directory>resources</directory>
+            </resource>
+        </resources>
+
         <plugins>
             <!-- Plugin pour compiler le code -->
             <plugin>
