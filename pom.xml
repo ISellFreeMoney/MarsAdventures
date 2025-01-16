@@ -41,7 +41,7 @@
                     <archive>
                         <manifest>
                             <!-- Point d'entrée de l'application -->
-                            <mainClass>src.Launcher</mainClass>
+                            <mainClass>fr.MarsAdventure.Launcher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
