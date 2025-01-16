@@ -22,7 +22,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
 
@@ -50,7 +50,7 @@ jobs:
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: "build-${{ github.run_number }}"
+          tag: "nightly"
           title: "MarsAdventures Build ${{ github.run_number }}"
           prerelease: true
           files: staging/*.jar
