@@ -16,10 +16,6 @@ public class NPC extends MovingEntity{
         aiManager = new AIManager();
     }
 
-    @Override
-    public Position getPosition() {
-        return position;
-    }
 
     @Override
     public void update(State state){

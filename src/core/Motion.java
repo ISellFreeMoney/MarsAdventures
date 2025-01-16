@@ -5,7 +5,7 @@ import controller.Controller;
 public class Motion {
 
     private Vector2D vector;
-    private double speed;
+    private final double speed;
 
     public Motion(double speed) {
         this.speed = speed;
@@ -44,5 +44,9 @@ public class Motion {
 
     public boolean isMoving(){
         return vector.length() > 0;
+    }
+
+    public void multiply(double speedMultiplier) {
+        vector.multiply(speedMultiplier);
     }
 }

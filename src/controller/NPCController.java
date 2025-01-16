@@ -32,10 +32,7 @@ public class NPCController implements Controller{
     public void moveToTarget(Position target, Position current) {
         double deltaX = target.getX() - current.getX();
         double deltaY = target.getY() - current.getY();
-
-
-        System.out.println("Movement: " + deltaX + ", " + deltaY);
-
+        
         up = deltaY < 0;
         right = deltaX > 0;
         down = deltaY > 0;

@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class SpriteLibrary {
 
-    private Map<String, SpriteSet> units;
-    private Map<String, Image> tiles;
+    private final Map<String, SpriteSet> units;
+    private final Map<String, Image> tiles;
 
     public SpriteLibrary(){
         units = new HashMap<>();
@@ -55,16 +55,16 @@ public class SpriteLibrary {
     private String[] getImagesInFolder(String basePath) {
         try {
             URL resource = getClass().getResource(basePath);
+            assert resource != null;
             Path folderPath = Paths.get(resource.toURI());
-            String[] files =  Files.walk(folderPath, 1)
+            return Files.walk(folderPath, 1)
                     .filter(Files::isRegularFile)
                     .skip(0)
                     .map(Path::getFileName)
                     .map(Path::toString)
                     .toArray(String[]::new);
-            return files;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Can't find Images in this folder");
         }
         return new String[0];
     }
@@ -74,6 +74,7 @@ public class SpriteLibrary {
         try {
 
             URL resource = getClass().getResource(basePath);
+            assert resource != null;
             Path folderPath = Paths.get(resource.toURI());
             return Files.walk(folderPath, 1)
                     .filter(Files::isDirectory)
@@ -82,7 +83,7 @@ public class SpriteLibrary {
                     .map(Path::toString)
                     .toArray(String[]::new);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Can't find folders in this folder");
         }
         return new String[0];
     }

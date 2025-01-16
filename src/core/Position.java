@@ -12,12 +12,12 @@ public class Position {
         this.x = x; this.y = y;
     }
 
-    public int getX() {
-        return (int) Math.floor(x);
+    public double getX() {
+        return x;
     }
 
-    public int getY() {
-        return (int) Math.floor(y);
+    public double getY() {
+        return y;
     }
 
     public void setX(int x) {
@@ -35,8 +35,14 @@ public class Position {
     }
 
     public boolean isInRangeOf(Position position) {
-        System.out.println("Current: " + getX() + ", " + getY() + System.lineSeparator()
-        + "To: " + position.getX() + ", " + position.getY());
-        return getX() == position.getX() && getY() == position.getY();
+        return Math.abs(x - position.getX()) < 1 && Math.abs(y - position.getY()) < 1;
+    }
+
+    public int intX() {
+        return (int)x;
+    }
+
+    public int intY(){
+        return (int)y;
     }
 }

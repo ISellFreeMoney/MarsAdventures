@@ -3,20 +3,36 @@ package display;
 import core.Position;
 import core.Size;
 import entity.GameObject;
+import game.Game;
 import game.state.State;
+import org.w3c.dom.css.Rect;
 
+import java.awt.*;
 import java.util.Optional;
 
 public class Camera {
 
-    private Position position;
-    private Size windowSize;
+    private static final int SAFETY_SPACE = 2 * Game.SPRITE_SIZE;
+
+    private final Position position;
+    private final Size windowSize;
+
+    private Rectangle viewBounds;
 
     private Optional<GameObject> objectWithFocus;
 
     public Camera(Size windowSize){
         this.position = new Position(0, 0);
         this.windowSize = windowSize;
+        calculateViewBounds();
+    }
+
+    private void calculateViewBounds() {
+        viewBounds = new Rectangle(
+                position.intX(),
+                position.intY(),
+                windowSize.getWidth() + SAFETY_SPACE,
+                windowSize.getHeight() + SAFETY_SPACE);
     }
 
     public void focusOn(GameObject object) {
@@ -31,10 +47,11 @@ public class Camera {
         if(objectWithFocus.isPresent()){
             Position objectPosition = objectWithFocus.get().getPosition();
 
-            this.position.setX(objectPosition.getX() - windowSize.getWidth() / 2);
-            this.position.setY(objectPosition.getY() - windowSize.getHeight() / 2);
+            this.position.setX(objectPosition.intX() - windowSize.getWidth() / 2);
+            this.position.setY(objectPosition.intY() - windowSize.getHeight() / 2);
 
             clampWithinBounds(state);
+            calculateViewBounds();
         }
     }
 
@@ -54,5 +71,18 @@ public class Camera {
         if(position.getY() + windowSize.getHeight() > state.getGameMap().getHeight()){
             position.setY(state.getGameMap().getHeight() - windowSize.getHeight());
         }
+    }
+
+    public boolean isInView(GameObject gameObject) {
+        return viewBounds.intersects(new Rectangle(
+                gameObject.getPosition().intX(),
+                gameObject.getPosition().intY(),
+                gameObject.getSize().getWidth(),
+                gameObject.getSize().getHeight()
+        ));
+    }
+
+    public Size getSize() {
+        return windowSize;
     }
 }

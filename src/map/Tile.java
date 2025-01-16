@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Tile {
 
-    private Image sprite;
+    private final Image sprite;
 
     public Tile(SpriteLibrary spriteLibrary){
         this.sprite = spriteLibrary.getTile("ground1");

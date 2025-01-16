@@ -8,11 +8,11 @@ import display.Display;
 
 public class Game {
 
-    public static int SPRITE_SIZE = 32;
+    public static final int SPRITE_SIZE = 32;
 
-    private Display display;
-    private Input input;
-    private State state;
+    private final Display display;
+    private final Input input;
+    private final State state;
     
 
     public Game(int width, int height){

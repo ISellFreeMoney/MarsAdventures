@@ -17,7 +17,9 @@ public abstract class GameObject {
 
     public abstract void update(State state);
     public abstract Image getSprite();
-    public abstract Position getPosition();
+    public Position getPosition(){
+        return position;
+    }
 
     public Size getSize() {
         return this.size;
