@@ -6,16 +6,15 @@ import gfx.SpriteLibrary;
 
 public class Player extends MovingEntity {
 
-    private Controller controller;
 
     public Player(Controller controller, SpriteLibrary spriteLibrary){
         super(controller, spriteLibrary);
     }
 
-    @Override
-    public void update() {
-        super.update();
-    }
+//    @Override
+//    public void update(State state) {
+//        super.update(state);
+//    }
 
 
     @Override

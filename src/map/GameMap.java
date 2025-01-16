@@ -1,5 +1,6 @@
 package map;
 
+import core.Position;
 import core.Size;
 import game.Game;
 import gfx.SpriteLibrary;
@@ -8,7 +9,7 @@ import java.util.Arrays;
 
 public class GameMap {
 
-    private Tile[][] tiles;
+    private final Tile[][] tiles;
 
     public GameMap(Size size, SpriteLibrary spriteLibrary){
         tiles = new Tile[size.getWidth()][size.getHeight()];
@@ -31,5 +32,11 @@ public class GameMap {
 
     public int getHeight(){
         return tiles[0].length * Game.SPRITE_SIZE;
+    }
+
+    public Position getRandomPosition() {
+        double x = Math.floor(Math.random() * tiles.length * Game.SPRITE_SIZE);
+        double y = Math.floor(Math.random() * tiles[0].length * Game.SPRITE_SIZE);
+        return new Position(x, y);
     }
 }

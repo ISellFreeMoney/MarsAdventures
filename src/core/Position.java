@@ -8,12 +8,16 @@ public class Position {
         this.x = x; this.y = y;
     }
 
+    public Position(double x, double y){
+        this.x = x; this.y = y;
+    }
+
     public int getX() {
-        return (int) Math.round(x);
+        return (int) Math.floor(x);
     }
 
     public int getY() {
-        return (int) Math.round(y);
+        return (int) Math.floor(y);
     }
 
     public void setX(int x) {
@@ -28,5 +32,11 @@ public class Position {
         Vector2D vector = motion.getVector();
         x += vector.getX();
         y += vector.getY();
+    }
+
+    public boolean isInRangeOf(Position position) {
+        System.out.println("Current: " + getX() + ", " + getY() + System.lineSeparator()
+        + "To: " + position.getX() + ", " + position.getY());
+        return getX() == position.getX() && getY() == position.getY();
     }
 }
