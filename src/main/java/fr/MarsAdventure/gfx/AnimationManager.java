@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 public class AnimationManager {
     private final SpriteSet spriteSet;
     private BufferedImage currentAnimationSheet;
+
     private final int updatePerFrame;
     private int currentFrameTime;
     private int frameIndex;

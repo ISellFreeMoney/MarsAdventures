@@ -49,4 +49,8 @@ public class Motion {
     public void multiply(double speedMultiplier) {
         vector.multiply(speedMultiplier);
     }
+
+    public void stop(){
+        vector = new Vector2D(0, 0);
+    }
 }
