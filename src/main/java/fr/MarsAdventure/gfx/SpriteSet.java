@@ -18,4 +18,9 @@ public class SpriteSet {
     public Image get(String name){
         return animationSheets.get(name);
     }
+
+    @Override
+    public String toString() {
+        return animationSheets.toString();
+    }
 }

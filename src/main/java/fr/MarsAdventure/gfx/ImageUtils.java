@@ -17,7 +17,7 @@ public class ImageUtils {
 
     public static Image loadImage(String filePath){
         try {
-            Image imageFromDisk = ImageIO.read(Objects.requireNonNull(ImageUtils.class.getResource(filePath)));
+            Image imageFromDisk = ImageIO.read((ImageUtils.class.getResourceAsStream(filePath)));
             BufferedImage compatibleImage = (BufferedImage) createCompatibleImage(
                     new Size(imageFromDisk.getWidth(null), imageFromDisk.getHeight(null)),
                     ALPHA_BIT_MASKED

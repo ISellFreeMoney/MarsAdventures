@@ -1,12 +1,17 @@
 package fr.MarsAdventure.gfx;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 public class SpriteLibrary {
 
@@ -25,67 +30,53 @@ public class SpriteLibrary {
     }
 
     private void loadUnits(String path){
-        String[] folderNames = getFolderNames(path);
-
-        for(String folderName : folderNames){
-            SpriteSet spriteSet = new SpriteSet();
-            String pathToFolder = path + "/" + folderName;
-            String[] sheetsInFolder = getImagesInFolder(pathToFolder);
-            for(String sheetName : sheetsInFolder){
-                spriteSet.addSheet(
-                        sheetName.substring(0, sheetName.length() - 4),
-                        ImageUtils.loadImage(pathToFolder + "/" + sheetName)
-                );
+        String[] imagePaths = getImagesInFolder(path);
+        String imageName = "";
+        String precedentFolder = "";
+        String folderName = "";
+        SpriteSet spriteSet = new SpriteSet();
+        for(String imagePath : imagePaths){
+            imagePath = imagePath.replace('\\', '/');
+            imagePath = imagePath.substring(imagePath.indexOf("/") + 1);
+            if(imagePath.contains("/")) {
+                imageName = imagePath.substring(imagePath.lastIndexOf("/"));
+                folderName = imagePath.substring(0, imagePath.lastIndexOf('/'));
+            } else {
+                imageName = imagePath;
+                folderName = "";
             }
+            imageName = imageName.substring(1, imageName.length() - 4);
+            if(!folderName.equals(precedentFolder)){
+                spriteSet = new SpriteSet();
+            }
+            spriteSet.addSheet(
+                    imageName,
+                    ImageUtils.loadImage(path + "/" + imagePath)
+            );
             units.put(folderName, spriteSet);
+            precedentFolder = folderName;
         }
     }
 
     private void loadTiles(String path){
-            String[] sheetsInFolder = getImagesInFolder(path);
-
-            for(String fileName : sheetsInFolder){
-                tiles.put(
-                        fileName.substring(0, fileName.length() - 4),
-                        ImageUtils.loadImage(path + "/" + fileName)
-                );
-            }
+        String[] imagesPaths = getImagesInFolder(path);
+        for(String imagePath : imagesPaths){
+            imagePath = imagePath.replace('\\', '/');
+            imagePath = imagePath.substring(imagePath.indexOf("/") + 1);
+            tiles.put(
+                    imagePath.substring(0, imagePath.length() - 4),
+                    ImageUtils.loadImage(path + "/" + imagePath)
+            );
         }
-
-    private String[] getImagesInFolder(String basePath) {
-        try {
-            URL resource = getClass().getResource(basePath);
-            assert resource != null;
-            Path folderPath = Paths.get(resource.toURI());
-            return Files.walk(folderPath, 1)
-                    .filter(Files::isRegularFile)
-                    .skip(0)
-                    .map(Path::getFileName)
-                    .map(Path::toString)
-                    .toArray(String[]::new);
-        } catch (Exception e) {
-            System.out.println("Can't find Images in this folder");
-        }
-        return new String[0];
     }
 
-    private String[] getFolderNames(String basePath) {
-
-        try {
-
-            URL resource = getClass().getResource(basePath);
-            assert resource != null;
-            Path folderPath = Paths.get(resource.toURI());
-            return Files.walk(folderPath, 1)
-                    .filter(Files::isDirectory)
-                    .skip(1)
-                    .map(Path::getFileName)
-                    .map(Path::toString)
-                    .toArray(String[]::new);
-        } catch (Exception e) {
-            System.out.println("Can't find folders in this folder");
-        }
-        return new String[0];
+    private String[] getImagesInFolder(String basePath) {
+        basePath = basePath.replace('/', '\\');
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/files.txt"), StandardCharsets.UTF_8));
+        List<String> lines = new ArrayList<>(bufferedReader.lines().toList());
+        String finalBasePath1 = basePath;
+        lines.removeIf(line -> !line.contains(finalBasePath1.substring(finalBasePath1.lastIndexOf('\\') + 1)));
+        return lines.toArray(String[]::new);
     }
 
     public SpriteSet getUnit(String name) {
