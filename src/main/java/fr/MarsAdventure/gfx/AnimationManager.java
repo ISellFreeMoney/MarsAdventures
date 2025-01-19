@@ -17,13 +17,16 @@ public class AnimationManager {
 
     public AnimationManager(SpriteSet spriteSet){
         this.spriteSet = spriteSet;
-        this.updatePerFrame = 10;
+        this.updatePerFrame = 7;
         this.frameIndex = 0;
         this.currentFrameTime = 0;
         playAnimation("IDLE");
     }
 
     public Image getSpriteSet() {
+        if(frameIndex >= (currentAnimationSheet.getWidth() / Game.SPRITE_SIZE)){
+            frameIndex = 0;
+        }
         return currentAnimationSheet.getSubimage(
                 frameIndex * Game.SPRITE_SIZE,
                 directionIndex  * Game.SPRITE_SIZE,
@@ -39,10 +42,6 @@ public class AnimationManager {
         if(currentFrameTime >= updatePerFrame){
             currentFrameTime = 0;
             frameIndex++;
-
-            if(frameIndex >= currentAnimationSheet.getWidth() / Game.SPRITE_SIZE - 1){
-                frameIndex = 0;
-            }
         }
     }
 
